@@ -10,17 +10,21 @@ import Lab3 from "./Lab3";
 
 export default function Labs() {
   return (
-    <div>
-      <h1>Yifan Chen</h1>
-      <h1>Labs</h1>
+    <div className="container mt-4">
+      <div className="text-left mb-4">
+      <h3>Yifan Chen  CS 5610 SEC 02</h3>
+      <h2>Labs</h2>
       <TOC />
       <Routes>
-        {/* <Route path="/" element={<Navigate to="Lab1" />} /> */}
         <Route path="Lab1" element={<Lab1 />} />
         <Route path="Lab2" element={<Lab2 />} />
         <Route path="Lab3" element={<Lab3 />} />
       </Routes>
     </div>
+    </div>
   );
 }
+
+
+
 
