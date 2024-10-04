@@ -1,0 +1,73 @@
+body   {  margin: 0;  padding: 0;  }
+body * {  font-family: Arial, Helvetica, sans-serif;  }
+
+@media (min-width: 768px) {
+  #wd-kanbas .wd-main-content-offset {
+    padding-left: 140px !important;
+  }
+}
+.list-group.wd > .list-group-item.active {
+  color: black;
+  background-color: white;
+  border-left: 3px solid black !important;
+}
+
+.btn-secondary {
+  --bs-btn-color: #000 !important;
+  --bs-btn-bg: #c7cdd1 !important;
+  --bs-btn-border-color: #c7cdd1 !important;
+  --bs-btn-hover-color: #fff !important;
+}
+.bg-secondary {
+  --bs-secondary-rgb: 199, 205, 209;
+}
+.list-group-item {
+  --bs-list-group-border-color: gray;
+}
+.wd-lesson {
+  border-left: 3px solid green !important;
+}
+
+.wd-assignment-item {
+  display: flex;
+  align-items: center;
+}
+
+.wd-assignment-icons {
+  display: flex;
+  flex-direction: row; /* Align icons vertically */
+  justify-content: center; /* Align the icons in the center of the container */
+}
+
+.wd-assignment-details {
+  text-align: left; /* Align the text on the left */
+}
+
+ 
+ .custom-badge {
+  border-color: #000 !important; 
+  color: #000; 
+}
+
+.dropdown-triangle {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid black; /* Creates a right-facing arrow */
+  transition: transform 0.3s ease; 
+}
+
+.triangle-down {
+  transform: rotate(90deg); /* Rotates the triangle down */
+}
+
+.triangle-right {
+  transform: rotate(0deg); 
+}
+
+
+
+
+

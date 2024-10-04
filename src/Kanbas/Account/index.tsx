@@ -14,6 +14,7 @@ export default function Account() {
               <AccountNavigation />
             </td>
             <td valign="top">
+            <div className="flex-fill">
               <Routes>
                 <Route path="/"
                        element={<Navigate to="/Kanbas/Account/Signin" />} />
@@ -21,10 +22,10 @@ export default function Account() {
                 <Route path="/Profile" element={<Profile />} />
                 <Route path="/Signup" element={<Signup />} />
               </Routes>
+              </div>
             </td>
           </tr>
         </table>
       </div>
   );}
-  
   
