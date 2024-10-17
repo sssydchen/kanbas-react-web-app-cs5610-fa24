@@ -1,18 +1,28 @@
 import { AiOutlineDashboard } from "react-icons/ai";
 import { IoCalendarOutline } from "react-icons/io5";
 import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
-import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
+import { FaCalendar, FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { MdOutlineAccountCircle } from "react-icons/md";
 
 export default function KanbasNavigation() {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const links = [
+    { label: "Dashboard", path: "/Kanbas/Dashboard", icon: AiOutlineDashboard },
+    { label: "Courses", path: "/Kanbas/Dashboard", icon: LiaBookSolid },
+    { label: "Calendar", path: "/Kanbas/Calendar", icon: IoCalendarOutline },
+    { label: "Inbox", path: "/Kanbas/Inbox", icon: FaInbox },
+    { label: "Labs", path: "/Labs", icon: LiaCogSolid },
+  ];
 
-  // Handle click for Courses to redirect to Dashboard
-  const handleCoursesClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault(); // Prevent default link behavior
-    navigate("/Kanbas/Dashboard"); // Navigate to Dashboard
-  };
+
+  // // Handle click for Courses to redirect to Dashboard
+  // const handleCoursesClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  //   e.preventDefault(); // Prevent default link behavior
+  //   navigate("/Kanbas/Dashboard"); // Navigate to Dashboard
+  // };
+
 
   return (
     <div id="wd-kanbas-navigation" style={{ width: 120 }}
@@ -26,68 +36,20 @@ export default function KanbasNavigation() {
       </a>
 
       <Link to="/Kanbas/Account" id="wd-account-link"
-        className={`list-group-item text-center border-0 ${
-          pathname.includes("/Kanbas/Account") ? "bg-white text-danger" : "bg-black"
-        }`}>
-        <FaRegCircleUser className="fs-1 text-danger" /><br />
-        <span className={pathname.includes("/Kanbas/Account") ? "text-danger" : "text-white"}>
+        className={`list-group-item text-center border-0 bg-black${pathname.includes("Account") ? "bg-white text-danger" : "bg-black text-white"
+          }`}>
+        <FaRegCircleUser className={`fs-1 ${pathname.includes("Account") ? "text-danger" : "text-white"
+          }`} /><br />
           Account
-        </span>
       </Link>
-
-      <Link to="/Kanbas/Dashboard" id="wd-dashboard-link"
-        className={`list-group-item text-center border-0 ${
-          pathname.includes("/Kanbas/Dashboard") ? "bg-white text-danger" : "bg-black"
-        }`}>
-        <AiOutlineDashboard className="fs-1 text-danger" /><br />
-        <span className={pathname.includes("/Kanbas/Dashboard") ? "text-danger" : "text-white"}>
-          Dashboard
-        </span>
-      </Link>
-
-      <a
-        href="/Kanbas/Courses"
-        id="wd-course-link"
-        className={`list-group-item text-center border-0 ${
-          pathname.includes("/Kanbas/Courses") ? "bg-white text-danger" : "bg-black"
-        }`}
-        onClick={handleCoursesClick}
-      >
-        <LiaBookSolid className="fs-1 text-danger" /><br />
-        <span className={pathname.includes("/Kanbas/Courses") ? "text-danger" : "text-white"}>
-          Courses
-        </span>
-      </a>
-
-      <Link to="/Kanbas/Calendar" id="wd-calendar-link"
-        className={`list-group-item text-center border-0 ${
-          pathname.includes("/Kanbas/Calendar") ? "bg-white text-danger" : "bg-black"
-        }`}>
-        <IoCalendarOutline className="fs-1 text-danger" /><br />
-        <span className={pathname.includes("/Kanbas/Calendar") ? "text-danger" : "text-white"}>
-          Calendar
-        </span>
-      </Link>
-
-      <Link to="/Kanbas/Inbox" id="wd-inbox-link"
-        className={`list-group-item text-center border-0 ${
-          pathname.includes("/Kanbas/Inbox") ? "bg-white text-danger" : "bg-black"
-        }`}>
-        <FaInbox className="fs-1 text-danger" /><br />
-        <span className={pathname.includes("/Kanbas/Inbox") ? "text-danger" : "text-white"}>
-          Inbox
-        </span>
-      </Link>
-
-      <Link to="/Labs" id="wd-labs-link"
-        className={`list-group-item text-center border-0 ${
-          pathname.includes("/Labs") ? "bg-white text-danger" : "bg-black"
-        }`}>
-        <LiaCogSolid className="fs-1 text-danger" /><br />
-        <span className={pathname.includes("/Labs") ? "text-danger" : "text-white"}>
-          Labs
-        </span>
-      </Link>
+      {links.map((link) => (
+        <Link key={link.path} to={link.path} className={`list-group-item bg-black text-center border-0
+              ${pathname.includes(link.label) ? "text-danger bg-white" : "text-white bg-black"}`}>
+          {link.icon({ className: "fs-1 text-danger"})}
+          <br />
+          {link.label}
+        </Link>
+      ))}
     </div>
   );
 }

@@ -1,43 +1,45 @@
-import { BsGripVertical, BsPlus, BsSearch} from "react-icons/bs";
+import { BsGripVertical, BsPlus, BsSearch } from "react-icons/bs";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import LessonControlButtons from "../Modules/LessonControlButtons";
-import { FaRegEdit} from "react-icons/fa";
+import { FaRegEdit } from "react-icons/fa";
 import { useState } from "react";
-
-
-
+import { useParams } from "react-router";
+import * as db from "../../Database";
 
 
 export default function Assignments() {
-  const [isExpanded, setIsExpanded] = useState(true); 
+  const [isExpanded, setIsExpanded] = useState(true);
   const toggleCollapse = () => {
     setIsExpanded(!isExpanded);
   };
 
+  const { cid } = useParams();
+  const assignments = db.assignments.filter(assignment => assignment.course === cid);
+
   return (
     <div id="wd-assignments">
-  <div className="d-flex justify-content-between align-items-center mb-3">
-    <div className="input-group" style={{ maxWidth: "300px" }}>
-    <span className="input-group-text bg-white ">
-      <BsSearch />
-    </span>
-    <input
-      type="text"
-      className="form-control"
-      placeholder="Search..."
-      style={{ boxShadow: "none" }}
-    />
-  </div>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <div className="input-group" style={{ maxWidth: "300px" }}>
+          <span className="input-group-text bg-white ">
+            <BsSearch />
+          </span>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search..."
+            style={{ boxShadow: "none" }}
+          />
+        </div>
 
-    <div className="d-inline-flex">
-      <button className="btn btn-secondary me-2">
-        <BsPlus className="me-1" /> Group
-      </button>
-      <button className="btn btn-danger text-white">
-        <BsPlus className="me-1" /> Assignment
-      </button>
-    </div>
-  </div>
+        <div className="d-inline-flex">
+          <button className="btn btn-secondary me-2">
+            <BsPlus className="me-1" /> Group
+          </button>
+          <button className="btn btn-danger text-white">
+            <BsPlus className="me-1" /> Assignment
+          </button>
+        </div>
+      </div>
       <ul className="mt-2 list-group rounded-0 w-100">
         <li className="wd-assignments list-group-item p-0 mb-5 fs-5 border-gray">
           <div className="wd-title p-3 ps-0 bg-secondary d-flex justify-content-between align-items-center">
@@ -57,72 +59,32 @@ export default function Assignments() {
 
           {isExpanded && (
             <ul className="wd-assignments-list list-group rounded-0">
-      <li className="wd-lesson list-group-item p-3 ps-1 d-flex align-items-center">
-        <BsGripVertical className="me-2 fs-3" />
-        <FaRegEdit className="me-4 text-success fs-5" />
-        <div className="flex-grow-1">
-          <a className="fw-bold text-dark text-decoration-none" href="#/Kanbas/Courses/1234/Assignments/123">
-            A1
-          </a>
-          <div>
-            <span className="text-danger me-2">Multiple Modules</span>
-            <span className="me-2">|</span>
-            <strong className="me-2">Not available until</strong>
-            <span className="me-2">May 6 at 12:00am</span>
-            <span className="me-2">|</span>
-            <strong className="me-2">Due</strong>
-            <span className="me-2">May 13 at 11:59pm</span>
-            <span className="me-2">|</span>
-            <span className="me-2">100 pts</span>
-          </div>
-        </div>
-        <LessonControlButtons />
-      </li>
-
-      <li className="wd-lesson list-group-item p-3 ps-1 d-flex align-items-center">
-        <BsGripVertical className="me-2 fs-3" />
-        <FaRegEdit className="me-4 text-success fs-5" />
-        <div className="flex-grow-1">
-          <a className="fw-bold text-dark text-decoration-none" href="#/Kanbas/Courses/1234/Assignments/456">
-            A2
-          </a>
-          <div>
-            <span className="text-danger me-2">Multiple Modules</span>
-            <span className="me-2">|</span>
-            <strong className="me-2">Not available until</strong>
-            <span className="me-2">May 13 at 12:00am</span>
-            <span className="me-2">|</span>
-            <strong className="me-2">Due</strong>
-            <span className="me-2">May 20 at 11:59pm</span>
-            <span className="me-2">|</span>
-            <span className="me-2">100 pts</span>
-          </div>
-        </div>
-        <LessonControlButtons />
-      </li>
-
-      <li className="wd-lesson list-group-item p-3 ps-1 d-flex align-items-center">
-        <BsGripVertical className="me-2 fs-3" />
-        <FaRegEdit className="me-4 text-success fs-5" />
-        <div className="flex-grow-1">
-          <a className="fw-bold text-dark text-decoration-none" href="#/Kanbas/Courses/1234/Assignments/789">
-            A3
-          </a>
-          <div>
-            <span className="text-danger me-2">Multiple Modules</span>
-            <span className="me-2">|</span>
-            <strong className="me-2">Not available until</strong>
-            <span className="me-2">May 20 at 12:00am</span>
-            <span className="me-2">|</span>
-            <strong className="me-2">Due</strong>
-            <span className="me-2">May 27 at 11:59pm</span>
-            <span className="me-2">|</span>
-            <span className="me-2">100 pts</span>
-          </div>
-        </div>
-        <LessonControlButtons />
-      </li>
-             
+              {assignments.map((assignment) => (
+                <li key={assignment._id} className="wd-lesson list-group-item p-3 ps-1 d-flex align-items-center">
+                  <BsGripVertical className="me-2 fs-3" />
+                  <FaRegEdit className="me-4 text-success fs-5" />
+                  <div className="flex-grow-1">
+                    <a
+                      className="fw-bold text-dark text-decoration-none"
+                      href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+                    >
+                      {assignment.title}
+                    </a>
+                    <div>
+                      <span className="text-danger me-2">Multiple Modules</span>
+                      <span className="me-2">|</span>
+                      <strong className="me-2">Not available until</strong>
+                      <span className="me-2">May 6 at 12:00am</span>
+                      <span className="me-2">|</span>
+                      <strong className="me-2">Due</strong>
+                      <span className="me-2">May 13 at 11:59pm</span>
+                      <span className="me-2">|</span>
+                      <span className="me-2">100 pts</span>
+                    </div>
+                  </div>
+                  <LessonControlButtons />
+                </li>
+              ))}
             </ul>
           )}
         </li>

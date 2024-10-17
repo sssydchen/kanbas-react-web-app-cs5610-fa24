@@ -1,12 +1,27 @@
 
+import { useParams, Link } from "react-router-dom";
+import * as db from "../../Database"; 
+import { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams(); 
+  const [assignment, setAssignment] = useState<{ _id: string; title: string; course: string } | null>(null);
+
+  useEffect(() => {
+    const selectedAssignment = db.assignments.find((a) => a._id === aid);
+    if (selectedAssignment) {
+      setAssignment(selectedAssignment);
+    }
+  }, [aid]);
+
+  if (!assignment) return <div>Loading...</div>;
+
   return (
     <div id="wd-assignments-editor" className="container mt-4">
       <div className="mb-4">
         <label htmlFor="wd-name" className="form-label fw-bold">Assignment Name</label>
-        <input type="text" id="wd-name" className="form-control" value="A1" />
+        <input type="text" id="wd-name" className="form-control" defaultValue={assignment.title} />
       </div>
 
       <div className="mb-4">
@@ -27,7 +42,6 @@ The landing page should include the following:
 
 The Kanbas application should include a link to navigate back to the landing page.`}
         />
-
       </div>
       <table className="table table-borderless w-100">
         <tbody>
@@ -159,11 +173,10 @@ The Kanbas application should include a link to navigate back to the landing pag
       <div className="row g-3 mt-2">
         <hr />
         <div className="d-flex justify-content-end">
-          <button id="cancel-btn" className="btn btn-secondary float-end me-3">Cancel</button>
-          <button id="save-btn" className="btn btn-danger float-end">Save</button>
+          <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary float-end me-3">Cancel</Link>
+          <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-danger float-end">Save</Link>
         </div>
       </div>
     </div>
   );
 }
-
