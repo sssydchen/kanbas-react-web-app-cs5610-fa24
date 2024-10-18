@@ -25,10 +25,9 @@
 import { Link, useParams, useLocation } from "react-router-dom";
 
 export default function CoursesNavigation() {
-  const { cid } = useParams(); // Retrieve current course ID from the URL
-  const { pathname } = useLocation(); // Get the current path
+  const { cid } = useParams(); 
+  const { pathname } = useLocation(); 
 
-  // Define the links as an array
   const links = [
     { label: "Home", path: "Home" },
     { label: "Modules", path: "Modules" },
@@ -45,7 +44,7 @@ export default function CoursesNavigation() {
       {links.map((link) => (
         <Link
           key={link.path}
-          to={`/Kanbas/Courses/${cid}/${link.path}`} // Construct path dynamically
+          to={`/Kanbas/Courses/${cid}/${link.path}`} 
           className={`list-group-item border-0 ${
             pathname.includes(link.path) ? "active text-danger" : "text-danger"
           }`}

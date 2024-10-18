@@ -74,12 +74,12 @@ export default function Assignments() {
                       <span className="text-danger me-2">Multiple Modules</span>
                       <span className="me-2">|</span>
                       <strong className="me-2">Not available until</strong>
-                      <span className="me-2">May 6 at 12:00am</span>
+                      <span className="me-2">{assignment.startDate.slice(0, 10)}  at 12:00am</span>
                       <span className="me-2">|</span>
                       <strong className="me-2">Due</strong>
-                      <span className="me-2">May 13 at 11:59pm</span>
+                      <span className="me-2">{assignment.dueDate.slice(0, 10)} at 11:59pm</span>
                       <span className="me-2">|</span>
-                      <span className="me-2">100 pts</span>
+                      <span className="me-2">{assignment.points} pts</span>
                     </div>
                   </div>
                   <LessonControlButtons />

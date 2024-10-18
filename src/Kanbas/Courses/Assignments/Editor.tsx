@@ -1,19 +1,11 @@
-
 import { useParams, Link } from "react-router-dom";
-import * as db from "../../Database"; 
-import { useState, useEffect } from "react";
+import * as db from "../../Database";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function AssignmentEditor() {
-  const { cid, aid } = useParams(); 
-  const [assignment, setAssignment] = useState<{ _id: string; title: string; course: string } | null>(null);
+  const { cid, aid } = useParams();
 
-  useEffect(() => {
-    const selectedAssignment = db.assignments.find((a) => a._id === aid);
-    if (selectedAssignment) {
-      setAssignment(selectedAssignment);
-    }
-  }, [aid]);
+  const assignment = db.assignments.filter((a) => a._id === aid)[0];
 
   if (!assignment) return <div>Loading...</div>;
 
@@ -21,7 +13,12 @@ export default function AssignmentEditor() {
     <div id="wd-assignments-editor" className="container mt-4">
       <div className="mb-4">
         <label htmlFor="wd-name" className="form-label fw-bold">Assignment Name</label>
-        <input type="text" id="wd-name" className="form-control" defaultValue={assignment.title} />
+        <input
+          type="text"
+          id="wd-name"
+          className="form-control"
+          defaultValue={assignment.title}
+        />
       </div>
 
       <div className="mb-4">
@@ -29,20 +26,11 @@ export default function AssignmentEditor() {
         <textarea
           id="wd-description"
           className="form-control"
-          rows={12}
-          defaultValue={`The assignment is available online.
-
-Submit a link to the landing page of your Web application running on Netlify.
-
-The landing page should include the following: 
-\u2022 Your full name and section, 
-\u2022 links to each of the lab assignments,
-\u2022 links to the Kanbas application, 
-\u2022 links to all relevant source code repositories. 
-
-The Kanbas application should include a link to navigate back to the landing page.`}
+          rows={10}
+          defaultValue={assignment.description}
         />
       </div>
+
       <table className="table table-borderless w-100">
         <tbody>
           <tr className="mb-3">
@@ -52,7 +40,12 @@ The Kanbas application should include a link to navigate back to the landing pag
                   <label htmlFor="wd-points">Points</label>
                 </div>
                 <div className="col-md-10">
-                  <input id="wd-points" type="number" className="form-control" value={100} />
+                  <input
+                    id="wd-points"
+                    type="number"
+                    className="form-control"
+                    defaultValue={assignment.points}
+                  />
                 </div>
               </div>
             </td>
@@ -87,7 +80,6 @@ The Kanbas application should include a link to navigate back to the landing pag
               </div>
             </td>
           </tr>
-
 
           <tr className="mb-3">
             <td>
@@ -141,22 +133,22 @@ The Kanbas application should include a link to navigate back to the landing pag
                   <div className="border p-3">
                     <div className="col-md-10">
                       <label htmlFor="wd-assign-to" className="form-label fw-bold">Assign to</label>
-                      <input type="text" id="wd-assign-to" className="form-control" value="Everyone" />
+                      <input type="text" id="wd-assign-to" className="form-control" defaultValue="Everyone" />
                     </div>
                     <div className="col-md-10 mt-3">
                       <label htmlFor="wd-due-date" className="form-label fw-bold">Due</label>
-                      <input type="date" id="wd-due-date" className="form-control" value="2024-05-13" />
+                      <input type="date" id="wd-due-date" className="form-control" defaultValue={assignment.dueDate} />
                     </div>
 
                     <div className="row g-3 mt-3">
                       <div className="col-md-6">
                         <label htmlFor="wd-available-from" className="form-label fw-bold">Available from</label>
-                        <input type="date" id="wd-available-from" className="form-control" value="2024-05-06" />
+                        <input type="date" id="wd-available-from" className="form-control" defaultValue={assignment.startDate} />
                       </div>
 
                       <div className="col-md-6">
                         <label htmlFor="wd-available-until" className="form-label fw-bold">Until</label>
-                        <input type="date" id="wd-available-until" className="form-control" value="2024-05-20" />
+                        <input type="date" id="wd-available-until" className="form-control" defaultValue={assignment.dueDate} />
                       </div>
                     </div>
 
@@ -165,16 +157,18 @@ The Kanbas application should include a link to navigate back to the landing pag
               </div>
             </td>
           </tr>
-
-
         </tbody>
       </table>
 
       <div className="row g-3 mt-2">
         <hr />
         <div className="d-flex justify-content-end">
-          <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary float-end me-3">Cancel</Link>
-          <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-danger float-end">Save</Link>
+          <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary float-end me-3">
+            Cancel
+          </Link>
+          <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-danger float-end">
+            Save
+          </Link>
         </div>
       </div>
     </div>
