@@ -1,0 +1,262 @@
+/*p {
+ background-color: blue;
+ color: white;}*/
+p#wd-id-selector-1 {
+  background-color: red;
+  color: white;
+}
+
+p#wd-id-selector-2 {
+  background-color: yellow;
+  color: black;
+}
+
+.wd-class-selector {
+  background-color: yellow;
+  color: blue;
+}
+
+.wd-selector-1 .wd-selector-3 {
+  /* refers to .wd-selector-3 as a descendant of .wd-selector-1   */
+  background-color: red;
+  color: white;
+}
+
+.wd-selector-2>.wd-selector-3>.wd-selector-4 {
+  background-color: yellow;
+  /* refers to .wd-selector-4 as a direct child of .wd-selector-3 */
+  color: blue;
+  /* which is a direct child of .wd-selector-2                 */
+}
+
+.wd-fg-color-black {
+  color: black;
+}
+
+.wd-fg-color-white {
+  color: white;
+}
+
+.wd-fg-color-blue {
+  color: #7070ff;
+}
+
+.wd-fg-color-red {
+  color: #ff7070;
+}
+
+.wd-fg-color-green {
+  color: green;
+}
+
+.wd-bg-color-yellow {
+  background-color: #ffff07;
+}
+
+.wd-bg-color-blue {
+  background-color: #7070ff;
+}
+
+.wd-bg-color-red {
+  background-color: #ff7070;
+}
+
+.wd-bg-color-green {
+  background-color: green;
+}
+
+.wd-bg-color-gray {
+  background-color: lightgray;
+}
+
+.wd-border-fat {
+  border-width: 20px 30px 20px 30px;
+}
+
+.wd-border-thin {
+  border-width: 4px;
+}
+
+.wd-border-solid {
+  border-style: solid;
+}
+
+.wd-border-dashed {
+  border-style: dashed;
+}
+
+.wd-border-yellow {
+  border-color: #ffff07;
+}
+
+.wd-border-red {
+  border-color: #ff7070;
+}
+
+.wd-border-blue {
+  border-color: #7070ff;
+}
+
+.wd-padded-top-left {
+  padding-top: 50px;
+  padding-left: 50px;
+}
+
+.wd-padded-bottom-right {
+  padding-bottom: 50px;
+  padding-right: 50px;
+}
+
+.wd-padding-fat {
+  padding: 50px;
+}
+
+.wd-margin-bottom {
+  margin-bottom: 50px;
+}
+
+.wd-margin-right-left {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.wd-margin-all-around {
+  margin: 30px;
+}
+
+.wd-rounded-corners-top {
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+}
+
+.wd-rounded-corners-bottom {
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+}
+
+.wd-rounded-corners-all-around {
+  border-radius: 50px;
+}
+
+.wd-rounded-corners-inline {
+  border-radius: 30px 0px 20px 50px;
+}
+
+.wd-dimension-portrait {
+  width: 75px;
+  height: 100px;
+}
+
+.wd-dimension-landscape {
+  width: 100px;
+  height: 75px;
+}
+
+.wd-dimension-square {
+  width: 75px;
+  height: 75px;
+}
+
+.wd-pos-relative-nudge-up-right {
+  position: relative;
+  bottom: 30px;
+  left: 30px;
+}
+
+.wd-pos-relative-nudge-down-right {
+  position: relative;
+  top: 20px;
+  left: 20px;
+}
+
+.wd-pos-relative {
+  position: relative;
+}
+
+.wd-pos-absolute-10-10 {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.wd-pos-absolute-50-50 {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+}
+
+.wd-pos-absolute-120-20 {
+  position: absolute;
+  top: 20px;
+  left: 120px;
+}
+
+.wd-float-left {
+  float: left;
+}
+
+.wd-float-right {
+  float: right;
+  height: 100px;
+}
+
+.wd-float-done {
+  clear: both;
+}
+
+.wd-grid-row {
+  clear: both;
+}
+
+.wd-grid-col-half-page {
+  width: 50%;
+  float: left;
+}
+
+.wd-grid-col-third-page {
+  width: 33%;
+  float: left;
+}
+
+.wd-grid-col-two-thirds-page {
+  width: 67%;
+  float: left;
+}
+
+.wd-grid-col-left-sidebar {
+  width: 20%;
+  float: left;
+}
+
+.wd-grid-col-main-content {
+  width: 60%;
+  float: left;
+}
+
+.wd-grid-col-right-sidebar {
+  width: 20%;
+  float: left;
+}
+
+.wd-flex-row-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.wd-flex-grow-1 {
+  flex-grow: 1;
+}
+
+#wd-screen-size-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: black;
+  color: white;
+  padding: 5px;
+  font-size: 12px;
+  z-index: 1000;
+  width: 220px;
+  text-align: center;
+}
+
