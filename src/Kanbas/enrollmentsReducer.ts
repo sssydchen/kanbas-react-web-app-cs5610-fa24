@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import enrollmentsData from "./Database/enrollments.json"
 
 interface Enrollment {
   user: string;
@@ -11,7 +12,7 @@ interface EnrollmentsState {
 }
 
 const initialState: EnrollmentsState = {
-  enrollments: [],
+  enrollments: enrollmentsData,
   viewAllCourses: false,
 };
 
