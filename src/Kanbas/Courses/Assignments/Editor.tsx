@@ -9,6 +9,8 @@ export default function AssignmentEditor() {
   const dispatch = useDispatch();
 
   const assignments = useSelector((state: any) => state.assignmentsReducer.assignments);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const isFaculty = currentUser?.role === "FACULTY";
 
   const assignmentData = assignments.find((a: any) => a._id === aid) || {
     title: "",
@@ -40,6 +42,7 @@ export default function AssignmentEditor() {
     setAssignment({ ...assignment, [field]: value });
   };
 
+
   return (
     <div id="wd-assignments-editor" className="container mt-4">
       <div className="mb-4">
@@ -50,6 +53,7 @@ export default function AssignmentEditor() {
           className="form-control"
           value={assignment.title}
           onChange={(e) => handleChange("title", e.target.value)}
+          readOnly={!isFaculty} // Read-only for non-faculty
         />
       </div>
 
@@ -61,6 +65,7 @@ export default function AssignmentEditor() {
           rows={10}
           value={assignment.description}
           onChange={(e) => handleChange("description", e.target.value)}
+          readOnly={!isFaculty} 
         />
       </div>
 
@@ -79,6 +84,7 @@ export default function AssignmentEditor() {
                     className="form-control"
                     value={assignment.points}
                     onChange={(e) => handleChange("points", e.target.value)}
+                    readOnly={!isFaculty} 
                   />
                 </div>
               </div>
@@ -98,6 +104,7 @@ export default function AssignmentEditor() {
                     className="form-control"
                     value={assignment.dueDate}
                     onChange={(e) => handleChange("dueDate", e.target.value)}
+                    readOnly={!isFaculty} 
                   />
                 </div>
               </div>

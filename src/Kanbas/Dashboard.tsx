@@ -25,14 +25,27 @@ export default function Dashboard({
 
   const isFaculty = currentUser?.role === "FACULTY";
 
-  const enrolledCourses = courses.filter((course) =>
-    enrollments.some(
-      (enrollment: { user: any; course: any }) =>
-        enrollment.user === currentUser?._id && enrollment.course === course._id
-    )
-  );
+  // const displayedCourses = isFaculty ? enrolledCourses : (viewAllCourses ? courses : enrolledCourses);
 
-  const displayedCourses = isFaculty ? courses : (viewAllCourses ? courses : enrolledCourses);
+
+  const displayedCourses = isFaculty
+  ? courses.filter((course) =>
+      enrollments.some(
+        (enrollment: { user: any; course: any }) =>
+          enrollment.user === currentUser._id &&
+          enrollment.course === course._id
+      )
+    )
+  : viewAllCourses
+  ? courses
+  : courses.filter((course) =>
+      enrollments.some(
+        (enrollment: { user: any; course: any }) =>
+          enrollment.user === currentUser._id &&
+          enrollment.course === course._id
+      )
+    );
+
 
   const handleEnrollToggle = (courseId: string, enrolled: boolean) => {
     if (enrolled) {
@@ -42,22 +55,21 @@ export default function Dashboard({
     }
   };
 
+
   const navigateToCourse = (courseId: string) => {
-    // If the user is a faculty, allow navigation to any course
-    if (isFaculty) {
+    const isAuthorized = enrollments.some(
+      (enrollment: { user: any; course: string; }) =>
+        enrollment.user === currentUser._id && enrollment.course === courseId
+    );
+
+    if (isAuthorized) {
       navigate(`/Kanbas/Courses/${courseId}/Home`);
     } else {
-      // For students, check if they are enrolled before navigating
-      const isEnrolled = enrollments.some(
-        (enrollment: { user: any; course: string }) =>
-          enrollment.user === currentUser._id && enrollment.course === courseId
+      alert(
+        isFaculty
+          ? "You are not assigned to teach this course."
+          : "You must be enrolled in this course to view it."
       );
-
-      if (isEnrolled) {
-        navigate(`/Kanbas/Courses/${courseId}/Home`);
-      } else {
-        alert("You must be enrolled in this course to view it.");
-      }
     }
   };
 
