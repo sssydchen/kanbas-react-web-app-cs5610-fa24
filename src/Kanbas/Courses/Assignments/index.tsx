@@ -1,12 +1,13 @@
 import { BsGripVertical, BsPlus, BsSearch } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
 import AssignmentControlButtons from "./AssignmentControlButtons";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteAssignment } from "./reducer";
+import { setAssignments, deleteAssignment as removeAssignment } from "./reducer";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import AssignmentsControls from "./AssignmentsControls";
+import * as client from "./client";
 
 export default function Assignments() {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -22,6 +23,15 @@ export default function Assignments() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const isFaculty = currentUser?.role === "FACULTY";
 
+  useEffect(() => {
+    const fetchAssignments = async () => {
+      if (!cid) return;
+      const assignments = await client.fetchAssignmentsForCourse(cid);
+      dispatch(setAssignments(assignments));
+    };
+    fetchAssignments();
+  }, [cid, dispatch]);
+
   const toggleCollapse = () => {
     setIsExpanded(!isExpanded);
   };
@@ -31,9 +41,10 @@ export default function Assignments() {
     setShowDeleteDialog(true);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (assignmentToDelete) {
-      dispatch(deleteAssignment(assignmentToDelete));
+      await client.deleteAssignment(assignmentToDelete);
+      dispatch(removeAssignment(assignmentToDelete));
       setAssignmentToDelete(null);
       setShowDeleteDialog(false);
     }

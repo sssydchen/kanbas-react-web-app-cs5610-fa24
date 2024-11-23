@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "../kanbas-node-server-app/Kanbas/Courses/dao.js"  ]
 }

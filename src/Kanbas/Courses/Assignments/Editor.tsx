@@ -1,7 +1,8 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
+import * as client from "./client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
@@ -22,16 +23,38 @@ export default function AssignmentEditor() {
   };
 
   const [assignment, setAssignment] = useState(assignmentData);
+  const [loading, setLoading] = useState(true);
 
-  const handleSave = () => {
+  useEffect(() => {
+    const fetchAssignment = async () => {
+      if (aid) {
+        try {
+          const fetchedAssignment = await client.fetchAssignmentById(aid);
+          setAssignment(fetchedAssignment);
+        } catch (err) {
+          console.error("Failed to fetch assignment:", err);
+        }
+      }
+      setLoading(false);
+    };
+
+    fetchAssignment();
+  }, [aid]);
+
+  const handleSave = async () => {
     if (!cid) {
       console.error("Course ID is missing");
       return;
     }
 
     if (!aid) {
+      const newAssignment = await client.createAssignmentForCourse(cid, assignment);
       dispatch(addAssignment({ ...assignment, course: cid }));
     } else {
+      const updatedAssignment = await client.updateAssignment(aid, {
+        ...assignment,
+        course: cid,
+      });
       dispatch(updateAssignment({ ...assignment, _id: aid, course: cid }));
     }
 

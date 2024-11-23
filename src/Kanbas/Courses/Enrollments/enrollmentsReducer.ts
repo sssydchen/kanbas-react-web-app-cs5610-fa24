@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import enrollmentsData from "./Database/enrollments.json"
 
 interface Enrollment {
   user: string;
@@ -12,7 +11,7 @@ interface EnrollmentsState {
 }
 
 const initialState: EnrollmentsState = {
-  enrollments: enrollmentsData,
+  enrollments: [],
   viewAllCourses: false,
 };
 
@@ -20,6 +19,9 @@ const enrollmentsSlice = createSlice({
   name: "enrollments",
   initialState,
   reducers: {
+    setEnrollments: (state, action: PayloadAction<Enrollment[]>) => {
+      state.enrollments = action.payload;
+    },
     toggleViewAllCourses: (state) => {
       state.viewAllCourses = !state.viewAllCourses;
     },
@@ -28,11 +30,12 @@ const enrollmentsSlice = createSlice({
     },
     unenroll: (state, action: PayloadAction<Enrollment>) => {
       state.enrollments = state.enrollments.filter(
-        (enrollment) => enrollment.user !== action.payload.user || enrollment.course !== action.payload.course
+        (enrollment) =>
+          enrollment.user !== action.payload.user || enrollment.course !== action.payload.course
       );
     },
   },
 });
 
-export const { toggleViewAllCourses, enroll, unenroll } = enrollmentsSlice.actions;
+export const { setEnrollments, toggleViewAllCourses, enroll, unenroll } = enrollmentsSlice.actions;
 export default enrollmentsSlice.reducer;
