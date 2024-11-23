@@ -55,7 +55,7 @@ export default function Kanbas() {
   };
 
   return (
-    // <Session>
+    <Session>
     <div id="wd-kanbas">
       {/* <h1>Kanbas</h1> */}
       <KanbasNavigation />
@@ -76,7 +76,7 @@ export default function Kanbas() {
         </Routes>
       </div>
     </div>
-    // </Session>
+    </Session>
   );
 }
 
