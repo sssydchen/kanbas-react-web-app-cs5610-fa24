@@ -56,17 +56,23 @@ export default function TOC() {
       </a>
     </li>
 
-    <li className="nav-item">
+    {/* <li className="nav-item">
       <a id="wd-render" href="https://kanbas-node-server-app-7hdm.onrender.com/" className="nav-link">
         Render
       </a>
-    </li>
+    </li> */}
 
     <li className="nav-item">
+      <a id="wd-render" href="https://kanbas-node-server-app-a6-g1rc.onrender.com" className="nav-link">
+        Render-a6
+      </a>
+    </li>
+
+    {/* <li className="nav-item">
       <a id="wd-heroku" href="https://yc-kanbas-node-server-app-772d4ad16817.herokuapp.com/" className="nav-link">
         Heroku
       </a>
-    </li>
+    </li> */}
   </ul>
 
 );}
