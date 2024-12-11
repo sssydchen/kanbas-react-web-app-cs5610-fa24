@@ -14,23 +14,23 @@ export default function Assignments() {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [assignmentToDelete, setAssignmentToDelete] = useState<string | null>(null);
 
-  const { cid } = useParams();
+  const { courseId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const assignments = useSelector((state: any) => state.assignmentsReducer?.assignments ?? []);
-  const filteredAssignments = assignments.filter((assignment: any) => assignment.course === cid);
+  const filteredAssignments = assignments.filter((assignment: any) => assignment.course === courseId);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const isFaculty = currentUser?.role === "FACULTY";
 
   useEffect(() => {
     const fetchAssignments = async () => {
-      if (!cid) return;
-      const assignments = await client.fetchAssignmentsForCourse(cid);
+      if (!courseId) return;
+      const assignments = await client.fetchAssignmentsForCourse(courseId as string);
       dispatch(setAssignments(assignments));
     };
     fetchAssignments();
-  }, [cid, dispatch]);
+  }, [courseId, dispatch]);
 
   const toggleCollapse = () => {
     setIsExpanded(!isExpanded);
@@ -69,7 +69,7 @@ export default function Assignments() {
             <BsPlus className="me-1" /> Group
           </button>
           {isFaculty && (
-            <button className="btn btn-danger text-white" onClick={() => navigate(`/Kanbas/Courses/${cid}/Assignments/New`)}>
+            <button className="btn btn-danger text-white" onClick={() => navigate(`/Kanbas/Courses/${courseId}/Assignments/New`)}>
               <BsPlus className="me-1" /> Assignment
             </button>
           )}
@@ -102,7 +102,7 @@ export default function Assignments() {
                   <div className="flex-grow-1">
                     <a
                       className="fw-bold text-dark text-decoration-none"
-                      href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+                      href={`#/Kanbas/Courses/${courseId}/Assignments/${assignment._id}`}
                     >
                       {assignment.title}
                     </a>

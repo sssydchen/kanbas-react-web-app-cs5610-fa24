@@ -291,7 +291,6 @@ export default function Dashboard({
           ))}
         </div>
       </div>
-      <pre>{JSON.stringify(courses, null, 3)}</pre>
     </div>
   );
 }
