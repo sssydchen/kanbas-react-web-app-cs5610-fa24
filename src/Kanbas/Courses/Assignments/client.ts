@@ -23,7 +23,9 @@ export const updateAssignment = async (assignmentId: string, assignment: any) =>
   const response = await axiosWithCredentials.put(`${ASSIGNMENTS_API}/assignments/${assignmentId}`, assignment);
   return response.data;
 };
-export function fetchAssignmentById(aid: string) {
-  throw new Error("Function not implemented.");
-}
+export const fetchAssignmentById = async (assignmentId: string) => {
+  const response = await axiosWithCredentials.get(`${ASSIGNMENTS_API}/assignments/${assignmentId}`);
+  return response.data;
+};
+
 
