@@ -129,7 +129,7 @@ export default function Kanbas() {
               }
             />
             <Route
-              path="/Courses/:cid/*"
+              path="/Courses/:courseId/*"
               element={<Courses courses={courses} />}
             />
             <Route path="/Calendar" element={<h2>Calendar</h2>} />

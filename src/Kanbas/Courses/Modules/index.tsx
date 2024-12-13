@@ -11,7 +11,7 @@ import * as coursesClient from "../client";
 import * as modulesClient from "./client";
 
 export default function Modules() {
-  const { cid } = useParams();
+  const { courseId } = useParams();
   // const [modules, setModules] = useState<any[]>(db.modules);
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: any) => state.modulesReducer);
@@ -19,16 +19,16 @@ export default function Modules() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const isFaculty = currentUser?.role === "FACULTY";
   const fetchModules = async () => {
-    const modules = await coursesClient.findModulesForCourse(cid as string);
+    const modules = await coursesClient.findModulesForCourse(courseId as string);
     dispatch(setModules(modules));
   };
   useEffect(() => {
     fetchModules();
   }, []);
   const createModuleForCourse = async () => {
-    if (!cid) return;
-    const newModule = { name: moduleName, course: cid };
-    const module = await coursesClient.createModuleForCourse(cid, newModule);
+    if (!courseId) return;
+    const newModule = { name: moduleName, course: courseId };
+    const module = await coursesClient.createModuleForCourse(courseId, newModule);
     dispatch(addModule(module));
   };
   const removeModule = async (moduleId: string) => {
@@ -53,7 +53,7 @@ export default function Modules() {
       <br />
       <ul id="wd-modules" className="list-group rounded-0">
         {modules
-          // .filter((module: any) => module.course === cid)
+          // .filter((module: any) => module.course === courseId)
           .map((module: any) => (
             <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
               <div className="wd-title p-3 ps-2 bg-secondary">

@@ -25,7 +25,7 @@
 import { Link, useParams, useLocation } from "react-router-dom";
 
 export default function CoursesNavigation() {
-  const { cid } = useParams(); 
+  const { courseId } = useParams(); 
   const { pathname } = useLocation(); 
 
   const links = [
@@ -44,7 +44,7 @@ export default function CoursesNavigation() {
       {links.map((link) => (
         <Link
           key={link.path}
-          to={`/Kanbas/Courses/${cid}/${link.path}`} 
+          to={`/Kanbas/Courses/${courseId}/${link.path}`} 
           className={`list-group-item border-0 ${
             pathname.includes(link.path) ? "active text-danger" : "text-danger"
           }`}

@@ -5,7 +5,7 @@ import { addAssignment, updateAssignment } from "./reducer";
 import * as client from "./client";
 
 export default function AssignmentEditor() {
-  const { cid, aid } = useParams();
+  const { courseId, aid } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -19,47 +19,62 @@ export default function AssignmentEditor() {
     points: 0,
     dueDate: "",
     startDate: "",
-    course: cid,
+    course: courseId,
   };
 
   const [assignment, setAssignment] = useState(assignmentData);
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     const fetchAssignment = async () => {
-      if (aid) {
-        try {
-          const fetchedAssignment = await client.fetchAssignmentById(aid);
-          setAssignment(fetchedAssignment);
-        } catch (err) {
-          console.error("Failed to fetch assignment:", err);
-        }
+      if (!aid || aid === "New") {
+        // Do not fetch for "New" or undefined `aid`; initialize default values.
+        setAssignment({
+          title: "",
+          description: "",
+          points: 0,
+          dueDate: "",
+          startDate: "",
+          course: courseId,
+        });
+        setLoading(false);
+        return;
       }
-      setLoading(false);
+  
+      try {
+        const fetchedAssignment = await client.fetchAssignmentById(aid);
+        setAssignment(fetchedAssignment);
+      } catch (err) {
+        console.error("Failed to fetch assignment:", err);
+      } finally {
+        setLoading(false);
+      }
     };
-
+  
     fetchAssignment();
-  }, [aid]);
+  }, [aid, courseId]);
+  
+  
 
   const handleSave = async () => {
-    if (!cid) {
+    if (!courseId) {
       console.error("Course ID is missing");
       return;
     }
-
-    if (!aid) {
-      const newAssignment = await client.createAssignmentForCourse(cid, assignment);
-      dispatch(addAssignment({ ...assignment, course: cid }));
+  
+    if (!aid || aid.toLowerCase() === "new") {
+      const newAssignment = await client.createAssignmentForCourse(courseId, assignment);
+      dispatch(addAssignment({ ...assignment, course: courseId }));
     } else {
       const updatedAssignment = await client.updateAssignment(aid, {
         ...assignment,
-        course: cid,
+        course: courseId,
       });
-      dispatch(updateAssignment({ ...assignment, _id: aid, course: cid }));
+      dispatch(updateAssignment({ ...assignment, _id: aid, course: courseId }));
     }
-
-    navigate(`/Kanbas/Courses/${cid}/Assignments`);
-  };
+  
+    navigate(`/Kanbas/Courses/${courseId}/Assignments`);
+  };  
 
   const handleChange = (field: string, value: string) => {
     setAssignment({ ...assignment, [field]: value });
@@ -158,7 +173,7 @@ export default function AssignmentEditor() {
       <div className="row g-3 mt-2">
         <hr />
         <div className="d-flex justify-content-end">
-          <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary float-end me-3">
+          <Link to={`/Kanbas/Courses/${courseId}/Assignments`} className="btn btn-secondary float-end me-3">
             Cancel
           </Link>
           <button onClick={handleSave} className="btn btn-danger float-end">
